@@ -1,6 +1,8 @@
+import {useMutation} from "@apollo/client";
 import Button from "@restart/ui/esm/Button";
-import React, { useEffect, useState } from "react";
-import { Form } from "react-bootstrap";
+import React, {useEffect, useState} from "react";
+import {Form} from "react-bootstrap";
+import {SIGNUP} from "../../core/queries";
 
 export default function Signup() {
   const [email, setEmail] = useState("");
@@ -8,7 +10,28 @@ export default function Signup() {
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
 
-  const handleClick = () => {};
+  const [signup, {data, loading}] = useMutation(SIGNUP);
+
+  const handleClick = () => {
+    signup({
+      variables: {
+        email,
+        password,
+        name,
+        bio,
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (data) {
+      if (data.signup.userErrors.length > 0) {
+        setError(data.signup.userErrors[0].message);
+      } else if (data.signup.token) {
+        localStorage.setItem("token", data.signup.token);
+      }
+    }
+  }, [data]);
 
   const [error, setError] = useState(null);
 

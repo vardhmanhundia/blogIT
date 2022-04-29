@@ -4,3 +4,4 @@ export {profileSchema} from "./profile.schema";
 export {userSchema} from "./user.schema";
 export {mutationSchema} from "./mutation.schema";
 export {errorSchema} from "./error.schema";
+export {authSchema} from "./auth.schema";

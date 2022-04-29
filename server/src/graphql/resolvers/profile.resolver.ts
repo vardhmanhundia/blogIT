@@ -7,7 +7,7 @@ export interface GetUserParentPayload {
 }
 
 export const ProfileResolver = {
-  user: (parent: GetUserParentPayload, __: any, {userId, prisma}: Context) => {
+  user: (parent: GetUserParentPayload, __: any, {prisma}: Context) => {
     return prisma.user.findUnique({
       where: {
         id: parent.UserId,

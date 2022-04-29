@@ -1,16 +1,40 @@
-import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import {useMutation} from "@apollo/client";
+import React, {useEffect, useState} from "react";
+import {Modal, Button, Form} from "react-bootstrap";
+import {CREATE_POST} from "../../core/queries";
 
 export default function AddPostModal() {
   const [show, setShow] = useState(false);
+
+  const [createPost, {data, loading}] = useMutation(CREATE_POST);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
+  const [error, setError] = useState(null);
 
-  const handleClick = () => {};
+  const handleClick = () => {
+    if (!content || !title) return;
+
+    createPost({
+      variables: {
+        content,
+        title,
+      },
+    });
+    handleClose();
+  };
+
+  useEffect(() => {
+    if (data) {
+      if (data.createPost.userErrors.lenght > 0) {
+        setError(data.createPost.userErrors[0].message);
+      } else if (data.createPost.post) {
+      }
+    }
+  }, [data]);
 
   return (
     <>

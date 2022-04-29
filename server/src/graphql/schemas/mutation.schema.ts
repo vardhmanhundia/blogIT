@@ -5,7 +5,7 @@ export const mutationSchema = gql`
     postCreate(post: PostInputPayload!): PostPayload!
     postUpdate(id: ID!, post: PostInputPayload!): PostPayload!
     postDelete(id: ID!): Boolean!
-    signUp: (credentials: CredentialsInput, name: String!, bio: String!): AuthPayload!
-    signIn: (credentials: CredentialsInput): AuthPayload!
+    signUp(credentials: CredentialsInput, name: String!, bio: String!): AuthPayload!
+    signIn(credentials: CredentialsInput): AuthPayload!
   }
 `;
